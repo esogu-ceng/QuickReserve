@@ -1,6 +1,7 @@
 package com.esogu.QuickReserve.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.time.ZoneId;
 
 @Entity
 @Table(name = "appointments")
+@Data
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

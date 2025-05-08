@@ -1,6 +1,7 @@
 package com.esogu.QuickReserve.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table
+@Data
 public class AvailabilitySlot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

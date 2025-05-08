@@ -2,11 +2,14 @@ package com.esogu.QuickReserve.model;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.util.List;
 import java.util.ArrayList;
 
 @Entity
 @Table (name= "schools")
+@Data
 public class School {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

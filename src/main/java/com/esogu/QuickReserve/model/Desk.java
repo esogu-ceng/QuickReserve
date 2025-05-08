@@ -1,6 +1,7 @@
 package com.esogu.QuickReserve.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name="desks")
+@Data
 public class Desk {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

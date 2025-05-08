@@ -1,0 +1,4 @@
+CREATE TABLE schools (
+    school_id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);

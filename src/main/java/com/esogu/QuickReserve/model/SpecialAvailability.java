@@ -1,6 +1,7 @@
 package com.esogu.QuickReserve.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -8,6 +9,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "special_availabilities")
+@Data
 public class SpecialAvailability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +20,10 @@ public class SpecialAvailability {
     private LocalDate date; // specific day this applies to
 
     @Column(name = "available", nullable = false)
-    private boolean available; // true = opened specially, false = closed specially
+    private boolean available;
 
     @Column(name = "start_time")
-    private LocalTime startTime; // Optional
+    private LocalTime startTime;
 
     @Column(name = "end_time")
     private LocalTime endTime;
