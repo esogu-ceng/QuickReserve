@@ -16,7 +16,7 @@ public class Student {
 
     private String name;
     private String email;
-    private String timezone; // e.g., "Europe/Berlin"
+    private String timezone;
 
     @OneToMany(mappedBy = "student")
     private List<Appointment> appointments = new ArrayList<>();
