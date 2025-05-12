@@ -2,7 +2,6 @@ package com.esogu.QuickReserve.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.TypeAlias;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
