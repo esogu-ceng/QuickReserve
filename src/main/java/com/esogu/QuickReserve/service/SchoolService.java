@@ -5,7 +5,7 @@ import com.esogu.QuickReserve.repository.SchoolRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +16,4 @@ public class SchoolService {
         return schoolRepository.save(school);
     }
 
-    public List<School> getAllSchools() {
-        return schoolRepository.findAll();
-    }
 }

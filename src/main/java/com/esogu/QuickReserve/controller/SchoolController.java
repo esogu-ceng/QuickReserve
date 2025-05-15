@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -24,12 +24,4 @@ public class SchoolController {
         return ResponseEntity.ok(schoolMapper.toDto(createdSchool));
     }
 
-    @GetMapping
-    public ResponseEntity<List<SchoolDto>> getAllSchools() {
-        List<School> schools = schoolService.getAllSchools();
-        List<SchoolDto> schoolDtos = schools.stream()
-                .map(schoolMapper::toDto)
-                .toList();
-        return ResponseEntity.ok(schoolDtos);
-    }
 }
