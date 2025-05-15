@@ -25,10 +25,7 @@ public class AppointmentSlotService {
                 .orElseThrow(() -> new EntityNotFoundException("Desk not found"));
 
         // Clear existing regular slots (keep special slots)
-        List<AppointmentSlot> existingSlots = slotRepository.findByDeskId(deskId);
-        existingSlots.stream()
-                .filter(slot -> !slot.isSpecial())
-                .forEach(slotRepository::delete);
+        slotRepository.deleteByDeskIdAndIsSpecialFalse(deskId);
 
         // Generate new slots based on working hours
         for (WorkingHours wh : desk.getWorkingHours()) {
