@@ -8,7 +8,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,9 +33,6 @@ public class StudentService {
 
     
     public void deleteStudent(Long id) {
-        if (!studentRepository.existsById(id)) {
-            throw new EntityNotFoundException("Student not found with id: " + id);
-        }
         studentRepository.deleteById(id);
     }
 
