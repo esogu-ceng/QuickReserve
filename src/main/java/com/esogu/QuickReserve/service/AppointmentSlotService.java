@@ -1,5 +1,6 @@
 package com.esogu.QuickReserve.service;
 
+import com.esogu.QuickReserve.dto.AppointmentSlotDto;
 import com.esogu.QuickReserve.model.AppointmentSlot;
 import com.esogu.QuickReserve.model.Desk;
 import com.esogu.QuickReserve.model.WorkingHours;
@@ -7,6 +8,7 @@ import com.esogu.QuickReserve.repository.AppointmentSlotRepository;
 import com.esogu.QuickReserve.repository.DeskRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -19,6 +21,7 @@ import java.util.List;
 public class AppointmentSlotService {
     private final AppointmentSlotRepository slotRepository;
     private final DeskRepository deskRepository;
+    private final ModelMapper modelMapper;
 
     public void generateSlotsForDesk(Long deskId) {
         Desk desk = deskRepository.findById(deskId)
@@ -80,7 +83,7 @@ public class AppointmentSlotService {
         slotRepository.save(mergedSlot);
     }
 
-    public AppointmentSlot addSpecialSlot(Long deskId, LocalDateTime startTime, LocalDateTime endTime) {
+    public AppointmentSlotDto addSpecialSlot(Long deskId, LocalDateTime startTime, LocalDateTime endTime) {
         Desk desk = deskRepository.findById(deskId)
                 .orElseThrow(() -> new EntityNotFoundException("Desk not found"));
 
@@ -91,7 +94,8 @@ public class AppointmentSlotService {
         slot.setAvailable(true);
         slot.setSpecial(true);
 
-        return slotRepository.save(slot);
+        AppointmentSlot savedSlot = slotRepository.save(slot);
+        return modelMapper.map(savedSlot, AppointmentSlotDto.class);
     }
 
     public void deleteSlots(Long deskId, LocalDateTime from, LocalDateTime to) {
@@ -99,7 +103,10 @@ public class AppointmentSlotService {
         slotRepository.deleteAll(slotsToDelete);
     }
 
-    public List<AppointmentSlot> getAvailableSlots(Long deskId, LocalDateTime from, LocalDateTime to) {
-        return slotRepository.findByDeskIdAndStartTimeBetweenAndIsAvailableTrue(deskId, from, to);
+    public List<AppointmentSlotDto> getAvailableSlots(Long deskId, LocalDateTime from, LocalDateTime to) {
+        List<AppointmentSlot> slots = slotRepository.findByDeskIdAndStartTimeBetweenAndIsAvailableTrue(deskId, from, to);
+        return slots.stream()
+                .map(slot -> modelMapper.map(slot, AppointmentSlotDto.class))
+                .toList();
     }
 }

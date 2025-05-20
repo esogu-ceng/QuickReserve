@@ -6,6 +6,7 @@ import com.esogu.QuickReserve.model.Student;
 import com.esogu.QuickReserve.repository.StudentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 
@@ -13,29 +14,22 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
-    private final StudentMapper studentMapper;
+    private final ModelMapper modelMapper;
 
-
-    
     public StudentDto createStudent(StudentDto studentDto) {
-        Student student = studentMapper.toEntity(studentDto);
+        Student student = modelMapper.map(studentDto, Student.class);
         Student savedStudent = studentRepository.save(student);
-        return studentMapper.toDto(savedStudent);
+        return modelMapper.map(savedStudent, StudentDto.class);
     }
 
-    
     public StudentDto getStudentById(Long id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + id));
-        return studentMapper.toDto(student);
+        return modelMapper.map(student, StudentDto.class);
     }
 
-
-    
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
     }
-
-
 
 }
