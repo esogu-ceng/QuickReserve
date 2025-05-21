@@ -11,8 +11,8 @@ import java.util.List;
 public interface AppointmentSlotRepository extends JpaRepository<AppointmentSlot, Long> {
 
     List<AppointmentSlot> findByDeskIdAndStartTimeBetween(Long deskId, LocalDateTime start, LocalDateTime end);
-    List<AppointmentSlot> findByDeskIdAndStartTimeBetweenAndIsAvailableTrue(Long schoolId, LocalDateTime start, LocalDateTime end);
-    List<AppointmentSlot> findByDeskId(Long deskId);
+    List<AppointmentSlot> findByDeskIdAndStartTimeBetweenAndIsAvailableTrue(Long deskId, LocalDateTime start, LocalDateTime end);
+    List<AppointmentSlot> findByDeskSchoolIdAndStartTimeBetweenAndIsAvailableTrue (Long schoolId, LocalDateTime start, LocalDateTime end);
     @Modifying
     @Transactional
     void deleteByDeskIdAndIsSpecialFalse(Long deskId);
