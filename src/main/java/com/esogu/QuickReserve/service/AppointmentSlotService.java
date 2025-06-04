@@ -12,8 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -40,16 +39,16 @@ public class AppointmentSlotService {
         // Default slot duration - could be configurable per desk
         Duration slotDuration = Duration.ofMinutes(30);
 
-        LocalTime current = wh.getStartTime();
+        ZonedDateTime current = wh.getStartTime();
         while (current.plus(slotDuration).isBefore(wh.getEndTime()) || current.plus(slotDuration).equals(wh.getEndTime())) {
-            LocalDateTime start = LocalDateTime.now()
+            ZonedDateTime start = ZonedDateTime.now()
                     .with(wh.getDayOfWeek())
                     .withHour(current.getHour())
                     .withMinute(current.getMinute())
                     .withSecond(0)
                     .withNano(0);
 
-            LocalDateTime end = start.plus(slotDuration);
+            ZonedDateTime end = start.plus(slotDuration);
 
             AppointmentSlot slot = new AppointmentSlot();
             slot.setDesk(desk);
@@ -64,7 +63,7 @@ public class AppointmentSlotService {
         }
     }
 
-    public void mergeSlots(Long deskId, LocalDateTime startTime, LocalDateTime endTime) {
+    public void mergeSlots(Long deskId, ZonedDateTime startTime, ZonedDateTime endTime) {
         List<AppointmentSlot> slotsToMerge = slotRepository.findByDeskIdAndStartTimeBetween(deskId, startTime, endTime.minusMinutes(1));
 
         if (slotsToMerge.isEmpty()) {
@@ -83,7 +82,7 @@ public class AppointmentSlotService {
         slotRepository.save(mergedSlot);
     }
 
-    public AppointmentSlotDto addSpecialSlot(Long deskId, LocalDateTime startTime, LocalDateTime endTime) {
+    public AppointmentSlotDto addSpecialSlot(Long deskId, ZonedDateTime startTime, ZonedDateTime endTime) {
         Desk desk = deskRepository.findById(deskId)
                 .orElseThrow(() -> new EntityNotFoundException("Desk not found"));
 
@@ -98,12 +97,12 @@ public class AppointmentSlotService {
         return modelMapper.map(savedSlot, AppointmentSlotDto.class);
     }
 
-    public void deleteSlots(Long deskId, LocalDateTime from, LocalDateTime to) {
+    public void deleteSlots(Long deskId, ZonedDateTime from, ZonedDateTime to) {
         List<AppointmentSlot> slotsToDelete = slotRepository.findByDeskIdAndStartTimeBetween(deskId, from, to);
         slotRepository.deleteAll(slotsToDelete);
     }
 
-    public List<AppointmentSlotDto> getAvailableSlots(Long deskId, LocalDateTime from, LocalDateTime to) {
+    public List<AppointmentSlotDto> getAvailableSlots(Long deskId, ZonedDateTime from, ZonedDateTime to) {
         List<AppointmentSlot> slots = slotRepository.findByDeskIdAndStartTimeBetweenAndIsAvailableTrue(deskId, from, to);
         return slots.stream()
                 .map(slot -> modelMapper.map(slot, AppointmentSlotDto.class))

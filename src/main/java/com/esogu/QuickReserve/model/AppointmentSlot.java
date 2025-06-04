@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 
 @Table(name = "appointment_slots")
@@ -14,8 +15,8 @@ public class AppointmentSlot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private ZonedDateTime startTime;
+    private ZonedDateTime endTime;
     private boolean isAvailable = true;
     private boolean isSpecial = false;
     private boolean isMerged = false;

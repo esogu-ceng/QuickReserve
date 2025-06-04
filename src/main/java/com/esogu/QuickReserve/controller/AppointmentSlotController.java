@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -20,16 +20,16 @@ public class AppointmentSlotController {
     @GetMapping("/desk/{deskId}/available")
     public ResponseEntity<List<AppointmentSlotDto>> getAvailableSlots(
             @PathVariable Long deskId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime from,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime to) {
         return ResponseEntity.ok(slotService.getAvailableSlots(deskId, from, to));
     }
 
     @PostMapping("/{deskId}/merge")
     public ResponseEntity<Void> mergeSlots(
             @PathVariable Long deskId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startTime,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endTime) {
         slotService.mergeSlots(deskId, startTime, endTime);
         return ResponseEntity.ok().build();
     }
@@ -37,16 +37,16 @@ public class AppointmentSlotController {
     @PostMapping("/{deskId}/special")
     public ResponseEntity<AppointmentSlotDto> addSpecialSlot(
             @PathVariable Long deskId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startTime,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime endTime) {
         return ResponseEntity.ok(slotService.addSpecialSlot(deskId, startTime, endTime));
     }
 
     @DeleteMapping("/{deskId}")
     public ResponseEntity<Void> deleteSlots(
             @PathVariable Long deskId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime from,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime to) {
         slotService.deleteSlots(deskId, from, to);
         return ResponseEntity.ok().build();
     }
