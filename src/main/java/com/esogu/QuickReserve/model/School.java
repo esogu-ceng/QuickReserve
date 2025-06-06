@@ -15,7 +15,6 @@ public class School {
     private Long id;
 
     private String name;
-    private String timezone; // e.g., "America/New_York"
 
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL)
     private List<Desk> desks = new ArrayList<>();

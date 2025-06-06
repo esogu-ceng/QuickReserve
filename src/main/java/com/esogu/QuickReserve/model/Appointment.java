@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Data
@@ -22,6 +23,6 @@ public class Appointment {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
     private AppointmentStatus status;
 }
