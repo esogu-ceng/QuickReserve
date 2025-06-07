@@ -5,14 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public interface AppointmentSlotRepository extends JpaRepository<AppointmentSlot, Long> {
 
-    List<AppointmentSlot> findByDeskIdAndStartTimeBetween(Long deskId, LocalDateTime start, LocalDateTime end);
-    List<AppointmentSlot> findByDeskIdAndStartTimeBetweenAndIsAvailableTrue(Long deskId, LocalDateTime start, LocalDateTime end);
-    List<AppointmentSlot> findByDeskSchoolIdAndStartTimeBetweenAndIsAvailableTrue (Long schoolId, LocalDateTime start, LocalDateTime end);
+    List<AppointmentSlot> findByDeskIdAndStartTimeBetween(Long deskId, ZonedDateTime start, ZonedDateTime end);
+    List<AppointmentSlot> findByDeskIdAndStartTimeBetweenAndIsAvailableTrue(Long schoolId, ZonedDateTime start, ZonedDateTime end);
+    List<AppointmentSlot> findByDeskId(Long deskId);
     @Modifying
     @Transactional
     void deleteByDeskIdAndIsSpecialFalse(Long deskId);

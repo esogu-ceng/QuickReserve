@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Data
@@ -17,8 +18,8 @@ public class WorkingHours {
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
 
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private ZonedDateTime startTime;
+    private ZonedDateTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "desk_id")

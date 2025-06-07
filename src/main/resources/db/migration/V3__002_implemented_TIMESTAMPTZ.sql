@@ -1,0 +1,6 @@
+ALTER TABLE appointment_slots
+ALTER COLUMN start_time TYPE TIMESTAMPTZ,
+    ALTER COLUMN end_time TYPE TIMESTAMPTZ;
+
+ALTER TABLE appointments
+ALTER COLUMN created_at TYPE TIMESTAMPTZ;
